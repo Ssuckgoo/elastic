@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+	<http auto-config="true" use-expressions="true">
+		
+		<intercept-url pattern="/login/**" access="permitAll"/>
+		<intercept-url pattern="/join/**" access="permitAll"/>
+		<intercept-url pattern="/**" access="isAuthenticated()"/>
+        <form-login
+	        login-page="/login/login.do"
+	        authentication-failure-url="/login/login.do?error=true"
+	        authentication-success-handler-ref="customLoginSuccess"
+	        default-target-url="main/main.do"
+	        username-parameter="username"
+	        password-parameter="password"
+	        login-processing-url="/login/loginAction.do"
+	        />
+        <logout
+            logout-url="/login/logoutAction.do"
+            logout-success-url="/login/login.do"
+            invalidate-session="true"/>
+            
+        <csrf disabled="true"/> 
+	</http>
+
+	<!-- 사용자 인증 provider -->	
+    <authentication-manager>
+        <authentication-provider user-service-ref="customUserDetailsService">
+            <password-encoder ref="passwordEncoder"/>
+        </authentication-provider>
+    </authentication-manager>	
+    
+    <beans:bean id="customLoginSuccess" class="com.login.CustomAuthenticationSuccessHandler"/>
+    
+ 	<beans:bean id="customUserDetailsService" class="com.login.CustomUserDetailsService"/>
+    <beans:bean id="passwordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+</beans:beans>
