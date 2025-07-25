@@ -1,24 +1,59 @@
 package com.search.web;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.search.SearchVO;
+import com.search.searvice.SearchService;
+
+import co.elastic.clients.elasticsearch.ElasticsearchClient;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+
 @Controller 
-@RequestMapping("/search")
 public class SearchController {
 
+	@Autowired
+	private SearchService searchService;
+	
     /*
      * 검색
      * @param searchVO: 검색 조건.
      * @return SearchResponse: ES가  전송한 검색 결과. Java에서는 받은 값을 그대로 client(ajax)에 전송. 모든 처리를 JS에서 진행
-     */    
-    @RequestMapping(value = "/search4Ajax")
-    public void search4Ajax(HttpServletRequest request, HttpServletResponse response) {
+     */
+    @RequestMapping("/search/search4Ajax.do")
+    public void search4Ajax(HttpServletRequest HttpRequest, HttpServletResponse HttpResponse) {
     	
-    	RestHighLevelClient client = new RestHighLevelClient 
+    	try {
+    		
+	    	ElasticsearchClient esClient = ElasticsearchClient.of(b -> b
+				.host("http://192.168.0.58:9200")
+			);
+	
+	    	String searchText = "개발팀";
+	
+//	    	SearchResponse<SearchVO> response = esClient.search(s -> s
+//	    	        .index("test_users")
+//	    	        .query(q -> q
+//	    	            .match(t -> t
+//	    	                .field("department")
+//	    	                .query(searchText)
+//	    	            )
+//	    	        ),
+//	    	        SearchVO.class
+//	    	);
+    	
+	    	esClient.close();
+	    	
+	    	
+    	}catch(Exception e) {
+    		
+    	} 
     	
     }
     
@@ -87,4 +122,5 @@ public class SearchController {
 //                );
 //    }
 //    // ---------------------------------------------------------------------------
-//}
+}
+ 
