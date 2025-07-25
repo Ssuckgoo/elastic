@@ -65,6 +65,14 @@
     </repositories>
 
 	<dependencies>
+		<!-- Elastic Search -->
+        <dependency>
+	      <groupId>co.elastic.clients</groupId>
+	      <artifactId>elasticsearch-java</artifactId>
+	      <version>9.0.1</version>
+    	</dependency>
+		<!-- Elastic Search -->
+	
 		<!-- Spring Security -->
 		<dependency>
 		    <groupId>org.springframework.security</groupId>
@@ -76,6 +84,7 @@
 		    <artifactId>spring-security-config</artifactId>
 		    <version>5.8.4</version>
 		</dependency>	
+		<!-- Spring Security -->
 	
 		<dependency>
 			<groupId>egovframework.rte</groupId>
