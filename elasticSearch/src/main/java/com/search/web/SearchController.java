@@ -18,8 +18,8 @@ import co.elastic.clients.elasticsearch.core.SearchResponse;
 @Controller 
 public class SearchController {
 
-	@Autowired
-	private SearchService searchService;
+//	@Autowired
+//	private SearchService searchService;
 	
     /*
      * 검색
@@ -31,11 +31,6 @@ public class SearchController {
     	
     	try {
     		
-	    	ElasticsearchClient esClient = ElasticsearchClient.of(b -> b
-				.host("http://192.168.0.58:9200")
-			);
-	
-	    	String searchText = "개발팀";
 	
 //	    	SearchResponse<SearchVO> response = esClient.search(s -> s
 //	    	        .index("test_users")
@@ -48,7 +43,6 @@ public class SearchController {
 //	    	        SearchVO.class
 //	    	);
     	
-	    	esClient.close();
 	    	
 	    	
     	}catch(Exception e) {
